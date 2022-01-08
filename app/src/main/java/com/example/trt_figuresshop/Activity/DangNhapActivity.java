@@ -6,17 +6,31 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.trt_figuresshop.Model.UserModel;
 import com.example.trt_figuresshop.R;
+import com.example.trt_figuresshop.Retrofit.API;
+import com.example.trt_figuresshop.Retrofit.RetrofitClient;
 import com.example.trt_figuresshop.Retrofit.Utils;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DangNhapActivity extends AppCompatActivity {
     TextView txtdangki;
     EditText email,pass;
     AppCompatButton btndangnhap;
+    API api;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +51,31 @@ public class DangNhapActivity extends AppCompatActivity {
         btndangnhap.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                String str_email = email.getText().toString().trim();
+                String str_pass = pass.getText().toString().trim();
+                if (TextUtils.isEmpty(str_email)){
+                    Toast.makeText(getApplicationContext(), "ban chua nhap Email", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(str_pass)){
+                    Toast.makeText(getApplicationContext(), "ban chua nhap pass", Toast.LENGTH_SHORT).show();
+                } else {
+                    compositeDisposable.add(api.dangNhap(str_email,str_pass)
+                            .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            UserModel -> {
 
+                            },
+                            throwable -> {
+                                Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                    ));
+                }
             }
         });
     }
 
     private void initView() {
+        api = RetrofitClient.getInstance(Utils.Base_URL).create(API.class);
         txtdangki = findViewById(R.id.txtdangki);
         email = findViewById(R.id.email);
         pass = findViewById(R.id.pass);
@@ -57,5 +90,10 @@ public class DangNhapActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
 }
 

@@ -33,4 +33,11 @@ public interface API {
             @Field("pass") String pass,
             @Field("phone") String phone
     );
+    @POST("dangki.php")
+    @FormUrlEncoded
+    Observable<UserModel> dangNhap(
+            @Field("email") String email,
+            @Field("[pass]") String pass
+
+    );
 }
