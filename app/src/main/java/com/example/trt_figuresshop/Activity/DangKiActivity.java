@@ -3,6 +3,7 @@ package com.example.trt_figuresshop.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -60,20 +61,27 @@ public class DangKiActivity extends AppCompatActivity {
         }else {
             if (str_pass.equals(str_repass)){
                 compositeDisposable.add(api.dangKi(str_email,str_username,str_pass,str_phone)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        userModel -> {
-                            if (userModel.isSuccess()){
-                                Toast.makeText(getApplicationContext(), "Thanh Cong", Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        },
-                        throwable -> {
-                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                ));
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                userModel -> {
+                                    if (userModel.isSuccess()){
+                                        Utils.user_current.setEmail(str_email);
+                                        Utils.user_current.setPassword(str_pass);
+                                        Intent intent = new Intent(getApplicationContext(),DangNhapActivity.class);
+                                        startActivity(intent);
+                                        finish();
+
+
+                                        Toast.makeText(getApplicationContext(), "Thanh Cong", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                },
+                                throwable -> {
+                                    Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                        ));
             }else {
                 Toast.makeText(getApplicationContext(), "ban nhap 2 pass ko giong", Toast.LENGTH_SHORT).show();
             }
