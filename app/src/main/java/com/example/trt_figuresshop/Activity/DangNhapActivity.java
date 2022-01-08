@@ -18,9 +18,11 @@ import com.example.trt_figuresshop.Retrofit.API;
 import com.example.trt_figuresshop.Retrofit.RetrofitClient;
 import com.example.trt_figuresshop.Retrofit.Utils;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.internal.Util;
 
 public class DangNhapActivity extends AppCompatActivity {
     TextView txtdangki;
@@ -58,12 +60,20 @@ public class DangNhapActivity extends AppCompatActivity {
                 }else if (TextUtils.isEmpty(str_pass)){
                     Toast.makeText(getApplicationContext(), "ban chua nhap pass", Toast.LENGTH_SHORT).show();
                 } else {
+                    Paper.book().write("email",str_email);
+                    Paper.book().write("pass",str_pass);
                     compositeDisposable.add(api.dangNhap(str_email,str_pass)
                             .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            UserModel -> {
+                            userModel -> {
+                                if(userModel.isSuccess()){
+                                    Utils.user_current = userModel.getResult().get(0);
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(intent);
+                            finish();
 
+                                }
                             },
                             throwable -> {
                                 Toast.makeText(getApplicationContext(),throwable.getMessage(),Toast.LENGTH_SHORT).show();
@@ -75,11 +85,16 @@ public class DangNhapActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Paper.init(this);
         api = RetrofitClient.getInstance(Utils.Base_URL).create(API.class);
         txtdangki = findViewById(R.id.txtdangki);
         email = findViewById(R.id.email);
         pass = findViewById(R.id.pass);
         btndangnhap = findViewById(R.id.btndangnhap);
+        if(Paper.book().read("email") != null && Paper.book().read("pass") != null){
+            email.setText(Paper.book().read("email"));
+            pass.setText(Paper.book().read("pass"));
+        }
     }
     @Override
     protected void onResume(){
