@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     NewProductAdapter newProductAdapter;
     NotificationBadge notificationBadge;
     FrameLayout frameLayout;
+    ImageView imgsearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getEventClick() {
+
         listViewmain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -178,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void TRT() {
+        imgsearch = findViewById(R.id.imgsearch);
+
         toolbar = findViewById(R.id.toolbarmain);
         viewFlipper = findViewById(R.id.viewflippermain);
         recyclerView = findViewById(R.id.recyview);
@@ -207,8 +211,17 @@ public class MainActivity extends AppCompatActivity {
             }
             notificationBadge.setText(String.valueOf(totalItem));
         }
+        imgsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+            startActivity(intent);
+
+            }
+        });
 
     }
+
 
     @Override
     protected void onResume() {
@@ -236,4 +249,5 @@ public class MainActivity extends AppCompatActivity {
         compositeDisposable.clear();
         super.onDestroy();
     }
+
 }
