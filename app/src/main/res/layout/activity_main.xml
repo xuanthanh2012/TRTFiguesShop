@@ -6,22 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity">
 
+
+
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawerlayoutmain"
+        android:id="@+id/drawlayoutmain"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:layout_height="match_parent">
             <androidx.appcompat.widget.Toolbar
+                android:background="@android:color/holo_red_light"
                 android:id="@+id/toolbarmain"
+                app:title="Trang Chủ"
+                app:titleTextColor="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="#CCDD8CFA"
-                app:title="TRT-Shop">
+                android:layout_height="?attr/actionBarSize">
                 <LinearLayout
                     android:layout_gravity="right"
                     android:orientation="horizontal"
@@ -29,75 +31,75 @@
                     android:layout_height="?attr/actionBarSize">
                     <ImageView
                         android:id="@+id/imgsearch"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="20dp"
                         android:src="@drawable/ic_search_24"
                         android:layout_width="wrap_content"
                         android:layout_height="?attr/actionBarSize"/>
                     <FrameLayout
                         android:id="@+id/framechitietgiohang"
+                        android:layout_marginRight="10dp"
 
-                        android:layout_marginRight="5dp"
                         android:layout_width="55dp"
                         android:layout_height="?attr/actionBarSize">
                         <com.nex3z.notificationbadge.NotificationBadge
+
                             android:id="@+id/menu_sl"
                             android:layout_gravity="top|right"
                             android:layout_width="28dp"
                             android:layout_height="28dp"/>
                         <ImageView
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
                             android:src="@drawable/ic_baseline_shopping_cart_24"
-                            android:layout_width="35dp"
+                            android:layout_width="40dp"
                             android:layout_height="35dp"/>
                     </FrameLayout>
                 </LinearLayout>
 
 
             </androidx.appcompat.widget.Toolbar>
-
             <ViewFlipper
                 android:id="@+id/viewflippermain"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"></ViewFlipper>
+                android:layout_height="200dp">
 
+            </ViewFlipper>
             <LinearLayout
+                android:background="#FFFFFF"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#CCDD8CFA"
-                android:orientation="vertical">
-
+                android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/holo_red_light"
                     android:text="Sản phẩm mới nhất"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyview"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_height="match_parent">
+
                 </androidx.recyclerview.widget.RecyclerView>
+
             </LinearLayout>
+
         </LinearLayout>
-
         <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigationviewmain"
+            android:id="@+id/navigationmain"
+            android:layout_gravity="start"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start">
-
+            android:layout_height="match_parent">
             <ListView
+                android:layout_marginTop="20dp"
                 android:id="@+id/listviewmain"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="10.0sp"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

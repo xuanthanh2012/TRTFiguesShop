@@ -188,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        navigationView = findViewById(R.id.navigationviewmain);
+        navigationView = findViewById(R.id.navigationmain);
         listViewmain = findViewById(R.id.listviewmain);
-        drawerLayout = findViewById(R.id.drawerlayoutmain);
+        drawerLayout = findViewById(R.id.drawlayoutmain);
         arrayProductType = new ArrayList<>();
         arrayNewProduct = new ArrayList<>();
         notificationBadge = findViewById(R.id.menu_sl);

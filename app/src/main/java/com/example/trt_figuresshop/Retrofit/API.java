@@ -40,4 +40,9 @@ public interface API {
             @Field("[pass]") String pass
 
     );
+    @POST("timkiem.php")
+    @FormUrlEncoded
+    Observable<NewProductModel> search(
+            @Field("search") String search
+    );
 }
